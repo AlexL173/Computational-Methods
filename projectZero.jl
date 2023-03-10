@@ -62,5 +62,5 @@ println(quadraticFormulaD(BigFloat(3), BigFloat(-4.2), BigFloat(-1.5)))
 
 
 #Call both quadratic graphing functions
-plotQuadratic(1,-1,-1,1)
+plotQuadratic(1,-1,-0.5,1)
 plotQuadratic(3,-4.2,-1.5, 4)
