@@ -4,14 +4,17 @@ using Plots
 Pkg.add("LaTeXStrings")
 using LaTeXStrings
 
+#Defines the cbrt function
 function defineCbrt(num)
     return (num^3) - 3
 end
 
+#Defines the quadratic to solve for part 3
 function defineQuadratic(num)
     return (num)^2 - (num) - 0.5
 end
 
+#Implementation of the quadratic formula from project 0
 function quadraticFormulaD(a,b,c)
     numerator = (-2) * c
     discriminant = b^2 - (4 * a * c)
@@ -24,6 +27,7 @@ function quadraticFormulaD(a,b,c)
     return sort(a)
 end
 
+#plotQuadratic function from project 0 
 function plotQuadratic(a,b,c)
 
     #Plot for quadratic 1
@@ -41,6 +45,7 @@ function plotQuadratic(a,b,c)
 
 end
 
+#runs the bisection algorithm, makes numIter bisections
 function bisectIterations(lb, ub, numIter, f)
     lowerBound = lb
     upperBound = ub
@@ -61,18 +66,15 @@ function bisectIterations(lb, ub, numIter, f)
     return (lowerBound + upperBound)/2
 end
 
+#runs the bisection algorithm until the answer has numDecimals of precision
 function bisectDecimals(lb, ub, numDecimals, f)
     lowerBound = lb
     upperBound = ub
     flag = 0
+    counter = 0
     while flag == 0
-        #println("---")
-        #println(lowerBound)
-        #println(upperBound)
-        #println(modf((lowerBound + upperBound)/2)[1])
-        #println((length(string(modf((lowerBound + upperBound)/2)[1])) -2))
+        counter += 1
         middleVal = (lowerBound + upperBound)/2
-
         if (f(lowerBound) * f(middleVal)) < 0
             upperBound = middleVal
         elseif f(middleVal) == 0
@@ -80,12 +82,15 @@ function bisectDecimals(lb, ub, numDecimals, f)
         else 
             lowerBound = middleVal
         end
-
+        #This checks if the decimal is long enough
         if ((length(string(modf((lowerBound + upperBound)/2)[1])) -2) >= numDecimals)
             flag = 1
         end
-
     end
+
+    print("Ran for ")
+    print(counter)
+    println(" iterations.")
 
     return (lowerBound + upperBound)/2
 end
@@ -108,29 +113,31 @@ function solveCbrt3(iterations)
     println("-----------------------")
 end
 
-function solveQuadratic(iterations,decimals)
+function solveQuadratic(itOrDec, number)
     
-    approximation = bisectDecimals(1,2,decimals,defineQuadratic)
-    trueValue = (1 + sqrt(3))/2
-    absoluteTrueError = abs(approximation - trueValue)
-    absoluteTrueRelativeError = absoluteTrueError /trueValue
-    println("-----------------------")
+    if (itOrDec == 1)
+        currentApproximation = bisectIterations(1,2,number, defineQuadratic)
+        previousApproximation = bisectIterations(1,2,number-1, defineQuadratic)
+    else 
+        currentApproximation = bisectDecimals(1,2,number, defineQuadratic)
+        previousApproximation = bisectDecimals(1,2,number-1, defineQuadratic)
+    end
+
+    
     print("Approximation: ")
-    println(approximation)
-    print("Absolute Relative True Error: ")
-    println(absoluteTrueRelativeError)
+    print(currentApproximation)
+    println()
+    print("Last Approximation: ")
+    print(previousApproximation)
+    println()
+    print("Absolute Relative Approximate Error: ")
+    absoluteRelativeError = abs(currentApproximation - previousApproximation)/abs(currentApproximation)
+    print(absoluteRelativeError)
+    println()
     println("-----------------------")
 end
 
 
-#solveCbrt3(3)
-#solveQuadratic(3)
-
-solveQuadratic(100,3)
-
-
-#plotQuadratic(1,-1,-0.5)
-
-
-#println(bisectIterations(1,2,100,defineCbrt))
-#println(bisectIterations(1,2,100,defineQuadratic))
+solveCbrt3(3)
+solveQuadratic(1,10)
+solveQuadratic(2,3)
