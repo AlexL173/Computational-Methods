@@ -119,5 +119,84 @@ x2, x1 = x2 - f(x2)/fp(x1, x2), x2
 x2, x1 = x2 - f(x2)/fp(x1, x2), x2
 x2, x1 = x2 - f(x2)/fp(x1, x2), x2
 
-println(x2)
-println(f(x2))
+#println(x2)
+#println(f(x2))
+
+#secant method
+x2,x1 =  0.5, 1
+f(x) = cos(x) - x^3
+fp(x) = -sin(x) - 3x^2
+
+
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+
+#print(x2)
+
+x2,x1 =  0.5, 1
+f(x) = x^5 + x - 1
+fp(x) = 5x^4 + 1
+
+
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+x2, x1 = x2 - f(x2)/fp(x1, x2), x2
+
+#print(x2)
+
+
+#8.5
+
+f(x) = exp(x) - x^4
+#plot(f,-5,9)
+
+r1 = find_zero(f,9)
+r2 = find_zero(f,2)
+r3 = find_zero(f,-1)
+#print(r1,r2,r3)
+
+f(x) = cos(x^2)^2
+#plot(f', -1, 2)
+
+arr = [find_zero(f',x) for x in [0, 1.2, 1.7]]
+#print(arr)
+
+f(x) = 4x^4 - 5x^3 +4x^2 - 20x - 6
+
+find_zero(f, 0)
+
+f(x) = x^x -2
+#plot(f,0,2)
+plot!(zero)
+
+newton(f,1)
+
+f(x) = x^5 - x - 1
+#plot(f, -1.5, 1.5)
+#print(find_zero(f,1))
+
+f(x) = 5/sin(x) + 8/cos(x) 
+#plot(f',-2,2)
+#print(find_zero(f',pi/4))
+
+tangent(f, c) = x -> f(c) + f'(c)* (x- c)
+
+f(x) = x^2 - 3x + 5
+h(x) = tangent(f, 1)(x) -  tangent(f, 3)(x)
+
+#print(find_zero(h,0))
+
+#8.6
+
+f(x) = sin(x) - x/4
+fp(x) = cos(x) -1/4
+#newton(f,fp,2pi,verbose = true)
