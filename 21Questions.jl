@@ -200,3 +200,39 @@ h(x) = tangent(f, 1)(x) -  tangent(f, 3)(x)
 f(x) = sin(x) - x/4
 fp(x) = cos(x) -1/4
 #newton(f,fp,2pi,verbose = true)
+
+f(x) = (x-2)^7 * (x-3) * (x-4)
+#newton(f, 2)
+plot(f, -2, 2)
+
+
+f(x) = atan(x)
+#println(newton(f, 1))
+#println(newton(f, 2))
+#println(newton(f, pi))
+
+
+#8.6.3
+f(x) = x^3 -5x 
+fp(x) = 3x^2 - 5
+
+x1 = 1
+x1 = x1 - f(x1)/fp(x1)
+#println(x1)
+x1 = x1 - f(x1)/fp(x1)
+#println(x1)
+x1 = x1 - f(x1)/fp(x1)
+#println(x1)
+
+
+f(x) = x >= 0 ? sqrt(x) : sqrt(-x)
+fp(x) = x >= 0 ? (1/2) * sqrt(x)/x : -(1/2) * sqrt(-x)/(-x)
+
+
+x1 = 3
+x1 = x1 - f(x1)/fp(x1)
+println(x1)
+x1 = x1 - f(x1)/fp(x1)
+println(x1)
+x1 = x1 - f(x1)/fp(x1)
+println(x1)
