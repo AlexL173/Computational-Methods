@@ -4,7 +4,7 @@ using Plots
 Pkg.add("LaTeXStrings")
 
 #define inital bounds
-start = 0; stop = 4; 
+start = 0; stop = 11; 
 #define initial function
 a = 3; b = -4.2; c = -1.5;
 #First Derivative
@@ -58,7 +58,29 @@ function rRam(f, start, stop, num)
     return runningApproximation
 end
 
+function mRam(f, start, stop, num)
+    # A running sum of the approximation
+    runningApproximation = 0 
+    # Width of each box 
+    delta = (stop - start)/num
+    # Starts the approximation at the left bound PLUS delta/2 to the middle
+    current = start + delta/2
 
-println(lRam(quadratic, start, stop, 4))
-print(rRam(quadratic, start, stop, 4))
+    #For each box: 
+    for i in 1:num
+
+        #Add the area of the box with h = f(middle) and width delta
+        currentBox = f(current) * delta
+
+        runningApproximation += currentBox
+
+        #updates the location to move onto the next box
+        current += delta
+    end
+    return runningApproximation
+end
+
+println(lRam(quadratic, start, stop, 9000))
+println(rRam(quadratic, start, stop, 9000))
+println(mRam(quadratic, start, stop, 9000))
 #print(quadratic(0))
