@@ -43,6 +43,8 @@ function plotQuadratic(a,b,c)
         #Save plots as image files
         savefig("QuadraticPlot.png")  
 
+        
+
 end
 
 #runs the bisection algorithm, makes numIter bisections
