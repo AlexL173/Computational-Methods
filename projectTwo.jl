@@ -24,6 +24,7 @@ function lRam(f, start, stop, num)
     # Starts the approximation at the left bound
     current = start
 
+    # Starts the graph, starts and stops slightly outside of the bounds
     x = range(start -1, stop + 1, length=100)
     plot(x, f, dpi = 1000, legend = false)
 
@@ -35,11 +36,14 @@ function lRam(f, start, stop, num)
 
         runningApproximation += currentBox
 
-        #updates the location to move onto the next box
+        #plots rectangles, using left edge as height        
         plot!(rectangle(delta, f(current) ,current, 0), opacity=.5, color = "blue")
+        
+        #updates the location to move onto the next box
         current += delta
     end
 
+    #saves graph
     savefig("left.png") 
 
     return runningApproximation
@@ -54,6 +58,7 @@ function rRam(f, start, stop, num)
     # Starts the approximation at the left bound PLUS delta to the right corner
     current = start + delta
 
+    # Starts the graph, starts and stops slightly outside of the bounds
     x = range(start -1, stop + 1, length=100)
     plot(x, f, dpi = 1000, legend = false)
 
@@ -65,8 +70,10 @@ function rRam(f, start, stop, num)
 
         runningApproximation += currentBox
 
-        #updates the location to move onto the next box
+        #plots rectangles, using right edge as height        
         plot!(rectangle(delta, f(current) ,current - delta, 0), opacity=.5, color = "blue")
+        
+        #updates the location to move onto the next box
         current += delta
     end
 
@@ -83,6 +90,7 @@ function mRam(f, start, stop, num)
     # Starts the approximation at the left bound PLUS delta/2 to the middle
     current = start + delta/2
 
+    # Starts the graph, starts and stops slightly outside of the bounds
     x = range(start -1, stop + 1, length=100)
     plot(x, f, dpi = 1000, legend = false)
 
@@ -93,9 +101,9 @@ function mRam(f, start, stop, num)
         currentBox = f(current) * delta
 
         runningApproximation += currentBox
-
-        #updates the location to move onto the next box
+        #plots rectangles using midpoint as height
         plot!(rectangle(delta, f(current) ,current - delta/2, 0), opacity=.5, color = "blue")
+        #updates the location to move onto the next box
         current += delta
     end
 
@@ -106,24 +114,20 @@ end
 
 # function finds the absolute highest point of a function between two bounds
 function findHighest(func, funcp, leftBound, rightBound)
-    #println(f(leftBound))
-    #println(f(rightBound))
-
 
     endPoints = [func(leftBound),func(rightBound)]
     #location at which the first derivative is 0, only 1 such location in a quadratic
-    
 
     criticalPoint = find_zeros(funcp, leftBound, rightBound)
 
     upper = max(endPoints[1], endPoints[2])
 
+    # of all possible points, check all  to see which is the largest
     if (length(criticalPoint) > 0)
         val = criticalPoint[1]
         upper = max(endPoints[1], endPoints[2], func(val))   
     end
     
-
     return upper
 end
 
@@ -144,8 +148,6 @@ function upperRam(func, fp, start, stop, num)
     x = range(start -1, stop + 1, length=100)
     plot(x, func, dpi = 1000, legend = false)
     
-
-
     #For each box: 
     for i in 1:num
         lb = current
@@ -159,23 +161,25 @@ function upperRam(func, fp, start, stop, num)
         
         height = findHighest(func, fp,lb, rb)
         #println(height)
-
+        
+        #plot rectangle from the highest point in its domain
         plot!(rectangle(delta, height ,current, 0), opacity=.5, color = "blue")
         current += delta
     end
 
     savefig("upper.png")  
-    
-
     return runningApproximation
 end
 
-#findHighest(quadratic, fprime, 1, 2)
 
-#findHighest(quadratic, fprime, 0, 1.25)
+#calculate using 15 boxes with all methods
+println(upperRam(quadratic, fprime, start, stop, 15))
+println(lRam(quadratic, start, stop, 15))
+println(rRam(quadratic, start, stop, 15))
+println(mRam(quadratic, start, stop, 15))
 
-println(upperRam(quadratic, fprime, start, stop, 40))
-println(lRam(quadratic, start, stop, 40))
-println(rRam(quadratic, start, stop, 40))
-println(mRam(quadratic, start, stop, 40))
-
+#calculate using 50 boxes with all methods
+println(upperRam(quadratic, fprime, start, stop, 50))
+println(lRam(quadratic, start, stop, 50))
+println(rRam(quadratic, start, stop, 50))
+println(mRam(quadratic, start, stop, 50))
